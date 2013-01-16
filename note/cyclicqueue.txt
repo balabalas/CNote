@@ -1,0 +1,135 @@
+
+Queue(队列)
+
+
+队列是一种先进先出(FIFO)的数据结构
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+下面所用到的常量：
+    QueueSize  队列中值的数量
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+1.队列结构
+typedef struct
+{
+    int front; //queue head
+    int rear; //queue tail
+    int counter; //count of queue elements
+    int data[QueueSize]; //content of the queue
+}Queue;
+###注意###
+这里我使用的是 typedef struct {} name; 的形式，而不是typedef struct name {};的形式。
+原因并不是后面一种情况不能用在此处。（主要是我看的参考书是这种形式）
+但是，在初始分配空间的时候，这两种可能会有点区别。
+------------------->分配空间: Queue *q = (Queue *)malloc(sizeof(Queue));
+但是，如果是第二种形式，应为: Queue *q = (Queue *)malloc(sizeof(struct Queue));
+
+2.队列初始化
+void initQueue(Queue *queue)
+{
+    queue->front = 0; //set queue head pointer value 0
+    queue->rear = 0; //set queue tail pointer value 0
+    queue->counter = 0; //queue has no element
+}
+
+3.判断队列是否为空
+bool QueueEmpty(Queue *queue)
+{
+    return queue->counter == 0;
+}
+#因为gcc4.7使用的是C11，所以，可以导入stdbool.h然后使用bool类型
+
+4.判断队列是否已满
+bool QueueFull(Queue *queue)
+{
+    return queue->counter == QueueSize;
+}
+
+5.进队操作
+bool enterQueue(Queue *queue, int data)
+{
+    if(QueueFull(queue))
+    {
+        return false; //如果队列已满，则返回
+    }
+    else
+    {
+        queue->data[queue->rear] = data;
+        queue->counter++;
+        queue->rear = (queue->rear + 1) % QueueSize; //循环队列
+        return true;
+    }
+}
+
+6.出队操作
+bool leaveQueue(Queue *queue, int *qdata)
+{
+    if(QueueEmpty(queue)) return false;
+    else
+    {
+        *qdata = queue-> data[queue->front];
+        queue->counter--;
+        queue->front = (queue->front + 1) % QueueSize;
+        return true;
+    }
+}
+
+7.打印队列操作
+void printQueue(Queue *queue)
+{
+    int num = queue->counter, head = queue->front;
+    if(QueueEmpty(queue))
+    {
+        printf("This queue is empty!\n");
+    }
+    else 
+    {
+        while(0 != num)
+        {
+            printf("\t%d", queue->data[head]);
+            head = (head + 1) % QueueSize;
+            num --;
+        }
+        printf("\n");
+    }
+}
+#这里打印操作时，不能直接使用队列的属性，否则会影响后绪操作。
+
+8. main()
+int main()
+{
+    Queue *q = (Queue *)malloc(sizeof(Queue));
+    int tem = 0, *d = &tem;
+    initQueue(q);
+    enterQueue(q, 12);
+    enterQueue(q, 23);
+    enterQueue(q, 65);
+    enterQueue(q, 40);
+    printQueue(q);
+    if(leaveQueue(q, d))
+    {
+        printf("%d leave the queue.\n", *d);
+        printQueue(q);
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
