@@ -16,9 +16,8 @@ struct point
     int y;
 } p1, p2;
 
-2. 元素引用
-一般来说，使用variable.member的方式来引用结构体中元素。
-但是，指针类型的需要注意这样的引用。
+2. 赋值方式
+    对于不是指针类型的结构体，可以直接赋值。但指针类型的不行。
 struct point 
 {
     int x;
@@ -28,13 +27,14 @@ struct point
 struct point p1 = {11, 22};
 struct point *pp = &p1;
 
+3. 元素引用
+    一般来说，使用variable.member的方式来引用结构体中元素。
+但是，指针类型的需要注意这样的引用。指针类型用得较多的是->这种方式。
 引用时候:
     p1.x, p1.y
     (*pp).x, (*pp).y 或 pp->x, pp->y // operator . is higher than *
     操作符.的优先级大于*的优先级。操作符->就相当于简化的(* ).
 
-3. 赋值方式
-    对于不是指针类型的结构体，可以直接赋值。但指针类型的不行。
 
 
 
