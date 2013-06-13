@@ -1,5 +1,6 @@
 #BASIC PRINTF CONVERSIONS  基本输出类型
    
+```
 CHARACTER(字符)   ARGUMENT TYPE; PRINTED AS
     d,i           int; decimal number. ()    
     o             unsigned int; unsigned octal number (without a leading zero).
@@ -12,7 +13,7 @@ CHARACTER(字符)   ARGUMENT TYPE; PRINTED AS
     g,G           double; use %e or %E if the exponent is less than -4 or greater than or equal to the precision; otherwise use %f. Trailing zeros and a trailing decimal point are not printed.
     p             void *; pointer (implementation-dependent representation).
     %             no argument is converted; print a %.
-
+```
 
 
 
